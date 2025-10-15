@@ -1,0 +1,147 @@
+" core settings
+let mapleader = "\<Space>"
+syntax on
+filetype plugin indent on
+set background=dark
+colorscheme lunaperche
+
+" basic UI
+set hidden                     " allow hidden buffers
+set laststatus=2               " always show status bar
+set mouse=a                    " enable mouse
+set termguicolors              " better colors
+set visualbell t_vb=           " no beeping
+set signcolumn=number
+
+" editing behavior
+set autoindent                 " keep indentation
+set expandtab                  " tabs to spaces
+set shiftwidth=2               " indentation amount
+set softtabstop=2              " tab key behavior
+set scrolloff=1                " keep lines visible when scrolling
+set backspace=indent,eol,start " sensible backspace
+
+" search
+set hlsearch                   " highlight search results
+set incsearch                  " incremental search
+set ignorecase smartcase       " case-insensitive unless capital used
+
+" keymaps
+inoremap jj <esc>
+map <space>l :let @/=''<cr>
+map <C-h> <C-w>h
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>l
+nnoremap Y y$
+nnoremap j gj
+nnoremap k gk
+vnoremap <space>y "+y
+vnoremap <space>d "+d
+nnoremap <space><space> :b#<cr>
+nnoremap <silent> <space>W :%s/\s\+$//<cr>:let @/=''<cr>
+
+nmap <c-c> :qa<cr>
+
+" fugitive/rhubarb/gv
+nmap <space>gb :G blame<cr>
+nmap <space>gs :G<cr>
+nmap <space>ge :Gedit<cr>
+nmap <space>gl :BCommits<cr>
+nmap <space>gL :GcLog<cr>
+nmap <space>gd :Gdiffsplit<cr>
+nmap <space>gw :Gwrite<cr>
+nmap <space>gp :Git log -p -- %<cr>
+
+" gutter
+nmap [c <plug>(GitGutterPrevHunk)
+nmap ]c <plug>(GitGutterNextHunk)
+nmap <space>hs <Plug>(GitGutterStageHunk)
+nmap <space>hu <Plug>(GitGutterUndoHunk)
+nmap <space>hv <Plug>(GitGutterPreviewHunk)
+
+" tab operations
+nnoremap <space>tn :tabnew<cr>
+nnoremap <space>tc :tabclose<cr>
+nnoremap <space>to :tabonly<cr>
+for i in range(1, 9)
+  execute 'nnoremap <Space>'.i.' '.i.'gt'
+endfor
+
+" buffer management
+command! BufOnly silent! execute "%bd|e#|bd#"
+nnoremap <space>o :only<cr>
+nnoremap <space>O :BufOnly<cr>
+nnoremap gb :ls<cr>:buffer<space>
+
+" file management
+nnoremap <space>eb :bashrc ~/.vim/.vimrc<cr>
+nnoremap <space>ev :edit ~/.vim/.vimrc<cr>
+nnoremap <space>rv :source ~/.vim/.vimrc<cr>
+
+" toggle background
+nnoremap yob :set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>
+nnoremap yoc :set cursorline!<CR>
+nnoremap yod :if &diff \| diffoff \| else \| diffthis \| endif<CR>
+
+" next and previous
+nnoremap [a :previous<CR>
+nnoremap ]a :next<CR>
+nnoremap [A :first<CR>
+nnoremap ]A :last<CR>
+nnoremap [b :bprevious<CR>
+nnoremap ]b :bnext<CR>
+nnoremap [B :bfirst<CR>
+nnoremap ]B :blast<CR>
+nnoremap [l :lprevious<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [L :lfirst<CR>
+nnoremap ]L :llast<CR>
+nnoremap [<C-L> :lpfile<CR>
+nnoremap ]<C-L> :lnfile<CR>
+nnoremap [q :cprevious<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [Q :cfirst<CR>
+nnoremap ]Q :clast<CR>
+nnoremap [<C-Q> :cpfile<CR>
+nnoremap ]<C-Q> :cnfile<CR>
+nnoremap [t :tprevious<CR>
+nnoremap ]t :tnext<CR>
+nnoremap [T :tfirst<CR>
+nnoremap ]T :tlast<CR>
+nnoremap [<C-T> :ptprevious<CR>
+nnoremap ]<C-T> :ptnext<CR>
+" [f and ]f not implemented
+" [n and ]n not implemented
+
+" line operations
+nnoremap [<Space> :<C-u>put! =repeat(nr2char(10), v:count1)<CR>'[
+nnoremap ]<Space> :<C-u>put =repeat(nr2char(10), v:count1)<CR>
+" [e and ]e not implemented
+
+" option toggling
+nnoremap yob :set background=<C-R>=&background == "dark" ? "light" : "dark"<CR><CR>
+nnoremap yoc :set cursorline!<CR>
+nnoremap yod :if &diff \| diffoff \| else \| diffthis \| endif<CR>
+nnoremap yoh :set hlsearch!<CR>
+nnoremap yoi :set ignorecase!<CR>
+nnoremap yol :set list!<CR>
+nnoremap yon :set number!<CR>
+nnoremap yor :set relativenumber!<CR>
+nnoremap yos :set spell!<CR>
+nnoremap yot :let &colorcolumn = &colorcolumn == '' ? '+1' : ''<CR>
+nnoremap you :set cursorcolumn!<CR>
+nnoremap yov :set virtualedit=<C-R>=&virtualedit == '' ? 'all' : ''<CR><CR>
+nnoremap yow :set wrap!<CR>
+nnoremap yox :set cursorline! cursorcolumn!<CR>
+
+" pasting
+" >p, >P, <p, <P, =p, =P not implemented
+" [op, ]op, yop not implemented
+
+" encoding and decoding
+" [x, ]x, [u, ]u, [y, ]y, [C, ]C not implemented
+" Ensure plugins load
+
+packloadall
+silent! helptags ALL
